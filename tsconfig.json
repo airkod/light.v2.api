@@ -1,0 +1,14 @@
+{
+  "compilerOptions" : {
+    "target" : "es2016",
+    "module" : "CommonJS",
+    "esModuleInterop" : true,
+    "moduleResolution" : "node",
+    "forceConsistentCasingInFileNames" : true,
+    "experimentalDecorators" : true,
+    "strict" : true,
+    "skipLibCheck" : true,
+    "removeComments" : true,
+    "strictNullChecks": false,
+  }
+}

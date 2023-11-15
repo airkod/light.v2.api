@@ -1,0 +1,19 @@
+{
+  "name": "light.v2",
+  "version": "0.9",
+  "scripts": {
+    "build": "ncc build src/main.ts -o build -m",
+    "dev": "concurrently \"ncc build src/main.ts -o dist -w\" \"nodemon dist/index.js\""
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongodb": "^6.2.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.9.0",
+    "concurrently": "^8.2.2",
+    "nodemon": "^3.0.1",
+    "typescript": "^5.2.2"
+  }
+}
