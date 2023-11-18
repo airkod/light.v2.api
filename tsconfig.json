@@ -10,5 +10,23 @@
     "skipLibCheck" : true,
     "removeComments" : true,
     "strictNullChecks": false,
+    "baseUrl" : "./",
+    "paths" : {
+      "@env": [
+        "src/env"
+      ],
+      "@interface/*": [
+        "src/interface/*"
+      ],
+      "@controller/*": [
+        "src/controller/*"
+      ],
+      "@helper/*": [
+        "src/helper/*"
+      ],
+      "@middleware/*": [
+        "src/middleware/*"
+      ]
+    }
   }
 }

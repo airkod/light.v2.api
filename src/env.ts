@@ -7,12 +7,9 @@ export const env = {
     scheme: "mongodb",
     host: "localhost",
     port: 27017,
-    db: "lightv2",
+    rootDbName: "lightv2",
   },
-  access: {
-    token: "hitman",
-  },
-  options: {
-    softDelete: true,
+  api: {
+    key: "api-key",
   },
 };
