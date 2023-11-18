@@ -54,4 +54,8 @@ export class CrudController {
   static async deleteMany(req: RequestInterface): Promise<void> {
     await req.collection.deleteMany(req.cond);
   }
+
+  static async command(req: RequestInterface): Promise<any> {
+    return await req.database.command(req.command);
+  }
 }

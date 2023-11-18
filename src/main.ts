@@ -52,7 +52,7 @@ const main = async (): Promise<void> => {
       res.send(await CrudController.deleteMany(await RequestHelper.collect(req)));
     })
     .post("/command", async (req: ExpressRequest, res: Response): Promise<void> => {
-      // TODO: Implement command
+      res.send(await CrudController.command(await RequestHelper.collect(req)));
     });
 
   app.listen(env.main.port, env.main.host, () => {

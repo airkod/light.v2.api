@@ -5,10 +5,11 @@ import { UserInterface } from "@interface/UserInterface";
 
 export class UserHelper {
   public static async addUserDatabase(user: UserInterface): Promise<void> {
+    // TODO: Check if a database with that name already exists
     user.database = "db" + generateUniqueId({
       useNumbers: true,
       useLetters: true,
-      length: 32
+      length: 32,
     });
 
     await DbHelper.rootDb().collection("user").updateOne(
@@ -135,7 +136,8 @@ export class UserHelper {
           }
 
           resolve();
-        });
+        })
+        .catch(e => reject(e));
     });
   }
 

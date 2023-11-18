@@ -245,7 +245,8 @@ Every request must include the following headers:
 
 #### 3.3.2. Basic body
 
-For all CRUD operations, it is necessary to include the name of the collection in the body, as each CRUD operation affects a specific
+For all CRUD operations except `command`, it is necessary to include the name of the collection in the body, as each CRUD operation affects
+a specific
 collection.
 
 ```json
@@ -570,11 +571,53 @@ For the `delete many` operation, the following values need to be passed:
 
 ---
 
+#### 3.3.11. Command
+
+You can execute database commands by using the `command` method on a Db instance.
+See [MongoDb command docs](https://www.mongodb.com/docs/manual/reference/command/)
+For the command operation, the following values need to be passed:
+
+- `command` - Object, See [MongoDb command docs](https://www.mongodb.com/docs/manual/reference/command/)
+
+`POST: /command`
+
+```json lines
+{
+    "command": {
+        "dbStats": 1
+    }
+}
+```
+
+`Response: 200`
+
+```json lines
+{
+    "db": "{database name}",
+    "collections": 2,
+    "views": 0,
+    "objects": 3,
+    "avgObjSize": 91.33333333333333,
+    "dataSize": 274,
+    "storageSize": 57344,
+    "indexes": 2,
+    "indexSize": 40960,
+    "totalSize": 98304,
+    "scaleFactor": 1,
+    "fsUsedSize": 62552223744,
+    "fsTotalSize": 1081101176832,
+    "ok": 1
+}
+```
+
+---
+
 ## LICENSE
 
-*In the shadow of dense family traditions, where the word respect and knowledge weighs more than gold.
+In the shadow of dense family traditions, where the word respect and knowledge weighs more than gold.
 I open the doors of this project for everyone.
 With generosity and nobility emanating from the depths of my heart,
-I share this wealth with you, asking not a cent in return.
-But remember, the day will come when possible I will ask for a service, and at that moment,
-I will count on your respect and devotion as a sign of gratitude for my unconditional trust and generosity.*
+I offer this abundance freely, without seeking a single penny in reciprocity.
+Yet, mark my words, a time may arrive when I call upon you for a service.
+At that juncture, I shall rely upon your respect and unwavering dedication
+as tokens of appreciation for my unwavering trust and boundless generosity.
