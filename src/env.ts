@@ -9,7 +9,8 @@ export const env = {
     port: 27017,
     rootDbName: "lightv2",
   },
-  api: {
-    key: "api-key",
+  secure: {
+    key: "hitman",
+    signature: "codename47"
   },
 };

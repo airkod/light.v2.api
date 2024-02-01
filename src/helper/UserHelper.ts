@@ -30,27 +30,15 @@ export class UserHelper {
 
   private static async generateSession(): Promise<SessionInterface> {
     const now: number = Math.ceil(Date.now() / 1000);
-
     const accessTokenExpires: number = now + 3600;
-    const refreshTokenExpires: number = now + 86400;
-
     const accessToken: string = generateUniqueId({
       useNumbers: true,
       useLetters: true,
       length: 32,
     });
-
-    const refreshToken: string = generateUniqueId({
-      useNumbers: true,
-      useLetters: true,
-      length: 32,
-    });
-
     return {
       accessToken,
-      refreshToken,
       accessTokenExpires,
-      refreshTokenExpires,
     };
   }
 
@@ -72,56 +60,6 @@ export class UserHelper {
     });
   }
 
-  public static async refreshToken(
-    login: string,
-    password: string,
-    accessToken: string,
-    refreshToken: string,
-  ): Promise<SessionInterface> {
-    return new Promise(async (resolve, reject): Promise<SessionInterface | void> => {
-      const user: UserInterface = await DbHelper.rootDb().collection("user").findOne({
-        login,
-        password,
-        "sessions.accessToken": accessToken,
-        "sessions.refreshToken": refreshToken,
-      });
-
-      if (!user) {
-        return reject("User not found");
-      }
-
-      if (!user.sessions) {
-        return reject("User session is invalid");
-      }
-
-      const now: number = Math.ceil(Date.now() / 1000);
-
-      const requestedSession: SessionInterface = user.sessions.find((session: SessionInterface) => {
-        return session.accessToken === accessToken && session.refreshToken === refreshToken;
-      });
-
-      if (!requestedSession) {
-        return reject("Refresh or access tokens is invalid");
-      }
-
-      if (requestedSession.refreshTokenExpires < now) {
-        return reject("Refresh token is expired");
-      }
-
-      const sessions: Array<SessionInterface> = user.sessions.filter((session: SessionInterface) => {
-        return session.accessToken !== accessToken && session.refreshToken !== refreshToken;
-      });
-
-      const newSession: SessionInterface = await this.generateSession();
-      sessions.push(newSession);
-      user.sessions = sessions;
-
-      await this.addUserSession(user, newSession);
-
-      resolve(newSession);
-    });
-  }
-
   public static async isValidAccessToken(accessToken: string): Promise<void> {
     return new Promise(async (resolve, reject): Promise<void> => {
       this.getUserByAccessToken(accessToken)
@@ -131,11 +69,9 @@ export class UserHelper {
             return session.accessToken === accessToken && session.accessTokenExpires > now;
           });
 
-          if (!requestedSession) {
-            return reject("Access token is expired");
-          }
-
-          resolve();
+          return requestedSession
+            ? resolve()
+            : reject("Access token is expired");
         })
         .catch(e => reject(e));
     });
